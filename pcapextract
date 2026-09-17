@@ -71,6 +71,18 @@ do
      echo
      echo "***********************************************************************************************"
      echo
+     echo -e "\t Extracting Broadcast/Discovery Traffic: View full results at ${pcap##*/}.$date directory"
+     sleep .5
+     tshark -t ad -r ${pcap##*/} -Y "arp" > ${pcap##*/}.$date/${pcap##*/}.$date.ARP.txt
+     tshark -t ad -r ${pcap##*/} -Y "nbns" > ${pcap##*/}.$date/${pcap##*/}.$date.NBNS.txt
+     tshark -t ad -r ${pcap##*/} -Y "llmnr" > ${pcap##*/}.$date/${pcap##*/}.$date.LLMNR.txt
+     tshark -t ad -r ${pcap##*/} -Y "mdns" > ${pcap##*/}.$date/${pcap##*/}.$date.MDNS.txt
+     tshark -t ad -r ${pcap##*/} -Y "eth.dst==ff:ff:ff:ff:ff:ff" > ${pcap##*/}.$date/${pcap##*/}.$date.BROADCAST.txt
+     sleep .5
+     echo -e "\t Status: Broadcast/Discovery Extraction Complete"
+     echo
+     echo "***********************************************************************************************"
+     echo
       z="${pcap##*/}.$date/${pcap##*/}.$date.EXPORT"
       pdf=$(find $dir -name *.pdf)
       if [ -n $z ]
